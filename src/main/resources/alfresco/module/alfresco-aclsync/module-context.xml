@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+                           http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+    <!-- Inert unless pge.aclsync.enabled=true; dry-run (log only, no writes) by default. -->
+    <bean id="pge.aclIndexSync" class="com.pgepi.alfresco.aclsync.AclIndexSync" init-method="init" destroy-method="destroy">
+        <property name="dataSource" ref="dataSource" />
+        <property name="permissionService" ref="permissionServiceImpl" />
+        <property name="transactionService" ref="transactionService" />
+        <property name="attributeService" ref="attributeService" />
+        <property name="enabled" value="${pge.aclsync.enabled:false}" />
+        <property name="dryRun" value="${pge.aclsync.dry-run:true}" />
+        <property name="opensearchUrl" value="${pge.aclsync.opensearch-url:http://opensearch:9200}" />
+        <property name="indexName" value="${pge.aclsync.index:alfresco}" />
+        <property name="intervalSeconds" value="${pge.aclsync.interval-seconds:60}" />
+        <property name="overlapMs" value="${pge.aclsync.overlap-ms:120000}" />
+    </bean>
+</beans>
